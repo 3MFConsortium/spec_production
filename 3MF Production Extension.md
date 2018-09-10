@@ -133,30 +133,25 @@ Because there can be only a single build section (in the root model), there is a
 ## 3.3 OPC Relation Files
 
 All model files in the 3MF package must be referenced in .rels files in order to conform with OPC standards. The root model file MUST always be referenced in the root .rels file with Id="0". Example root .rels file:
-
+```xml
 <?xml version="1.0" encoding="utf-8"?>
-
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-
 <Relationship Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel" Target="/3D/build.model" Id="rel0" />
-
 <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail" Target="/Metadata/thumbnail.png" Id="rel4" />
-
 </Relationships>
+```
 
 Non-root model files must not be referenced from the root .rels file. Referenced model files must be included the .rels file from the referencing model file according to the part relationship defined in OPC. For example, assuming that the root model file in the /3D folder is named model.model, the non-root model file references must be in the /3D/\_rels/model.model.rels file:
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
-
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-
 <Relationship Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel" Target="/3D/object1.model" Id="rel1" />
-
 <Relationship Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel" Target="/3D/object2.model" Id="rel2" />
-
 <Relationship Type="http://schemas.microsoft.com/3dmanufacturing/2013/01/3dmodel" Target="/3D/object3.model" Id="rel3" />
-
 </Relationships>
+
+```
 
 # Chapter 4. Identifying Build Components
 
@@ -170,7 +165,7 @@ In some environments, it is crucial that the builds themselves can be uniquely i
 
 Element **<build>**
 
-| Diagram | ![](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png) |
+![](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png) |
 | --- | --- |
 | attributes |
 
