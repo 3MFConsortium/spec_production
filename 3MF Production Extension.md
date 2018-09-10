@@ -178,16 +178,11 @@ Producers MUST provide a UUID in the root model file build element to ensure tha
 
 Element **<item>**
 
-| Diagram | ![](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png) |
-| --- | --- |
-| attributes |
+![item](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png) |
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required |
- | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
-
- |
+| UUID | **ST\_UUID** | required | | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
 
 Producers MUST include UUID's for all build items for traceability across 3MF packages.
 
