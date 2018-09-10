@@ -83,7 +83,7 @@ These two limitations ensure there is only a single level of "depth" to multi-fi
 
 # Chapter 3. Production Extension Data Details
 
-![](3MF_Production_Extension_Spec_v1.1_html_a21621bce13d26f8.gif)
+![figure 3-1](images/figure_3-1.png)
 _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 ## 3.1 The Path Attribute
@@ -178,7 +178,7 @@ Producers MUST provide a UUID in the root model file build element to ensure tha
 
 Element **\<item>**
 
-![item.png](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png)
+![item2.png](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
@@ -204,7 +204,7 @@ Producers MUST include UUID's in all \<object> references to ensure that each ob
 
 Element **\<component>**
 
-![component.png](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png)
+![component2.png](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
