@@ -96,10 +96,10 @@ Within the \<item> element of the build section in the root model, there is a ne
 
 ##### Attributes
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required | | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
-| objectid | **ST\_ResourceID** | required | | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| path | **ST\_Path** | required | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
 
 ### 3.1.2 Component
 
@@ -109,10 +109,10 @@ Within the \<component> elements of component-based objects, the "path" attribut
 
 ##### Attributes
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required | | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
-| objectid | **ST\_ResourceID** | required | | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| path | **ST\_Path** | required | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
 
 ## 3.2 Path Usage
 
@@ -167,9 +167,9 @@ Element **\<build>**
 
 ![build.png](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png)
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| uuid | **ST\_UUID** | required | | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| uuid | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
 
 
 Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
@@ -180,9 +180,9 @@ Element **\<item>**
 
 ![item.png](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png)
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| UUID | **ST\_UUID** | required | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
 
 Producers MUST include UUID's for all build items for traceability across 3MF packages.
 
@@ -192,9 +192,9 @@ Element **\<object>**
 
 ![object.png](3MF_Production_Extension_Spec_v1.1_html_d254e86223440f10.png)
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| UUID | **ST\_UUID** | required | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
@@ -206,9 +206,9 @@ Element **\<component>**
 
 ![component.png](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png)
 
-| Name | Type | Use | Default | Fixed | Annotation |
-| --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
 
 Producers MUST include UUID's in all component-based object references to ensure that each instance of an object can be reliably tracked.
 
