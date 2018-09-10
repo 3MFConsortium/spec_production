@@ -105,18 +105,14 @@ Within the <item> element of the build section in the root model, there is a new
 
 Within the <component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
-| Diagram | ![](3MF_Production_Extension_Spec_v1.1_html_9a645498f8c1bc2c.png) |
-| --- | --- |
-| Attributes |
+![component](3MF_Production_Extension_Spec_v1.1_html_9a645498f8c1bc2c.png) |
+
+##### Attributes
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required |
- |
- | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| path | **ST\_Path** | required | | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
-
- |
 
 ## 3.2 Path Usage
 
