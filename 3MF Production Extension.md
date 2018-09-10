@@ -92,18 +92,14 @@ _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 Within the <item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
-| diagram | ![](3MF_Production_Extension_Spec_v1.1_html_f514a82f6583dc37.png) |
-| --- | --- |
-| attributes |
+![item](3MF_Production_Extension_Spec_v1.1_html_f514a82f6583dc37.png) |
+
+##### Attributes
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required |
- |
- | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| path | **ST\_Path** | required | | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
-
- |
 
 ### 3.1.2 Component
 
