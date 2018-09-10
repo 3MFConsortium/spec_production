@@ -1,4 +1,4 @@
-# 3MF Beamlattice extension
+# 3MF Production extension
 
 This repository contains the full specification for the 3MF Production extension.
 
