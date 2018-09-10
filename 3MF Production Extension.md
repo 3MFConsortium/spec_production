@@ -58,7 +58,7 @@ This document describes new non-object resources, as well as attributes to the b
 
 In order to allow for the use of 3MF in high production printing environments, several additions are needed to efficiently support packed build platforms and ensure integrity of the payload:
 
-- Enable the 3MF <build> elements to address objects in separate files within the 3MF package
+- Enable the 3MF \<build> elements to address objects in separate files within the 3MF package
 - Identify each build, each object and each copy of a part with unique identifiers
 
 A consumer supporting the production extension MUST be able to consume non-extended core 3MFs, even if this is not as efficient. As the production extension is just a reorganization of data, a consumer MAY convert a generic core 3MF into a "production extended 3MF" before internally processing the data.
@@ -90,7 +90,7 @@ _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 ### 3.1.1 Item
 
-Within the <item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
+Within the \<item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
 ![item.png](3MF_Production_Extension_Spec_v1.1_html_f514a82f6583dc37.png)
 
@@ -103,7 +103,7 @@ Within the <item> element of the build section in the root model, there is a new
 
 ### 3.1.2 Component
 
-Within the <component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
+Within the \<component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
 ![component.png](3MF_Production_Extension_Spec_v1.1_html_9a645498f8c1bc2c.png)
 
@@ -155,15 +155,15 @@ Non-root model files must not be referenced from the root .rels file. Referenced
 
 # Chapter 4. Identifying Build Components
 
-Components of 3MF containers need to be uniquely identifiable in order to ensure tracking of builds and parts through build processes. Within a given 3MF container, build items can be uniquely identified by providing a UUID for each <item>. Individual objects (models) in a build can be uniquely identified with a UUID on each <object> element. Individual component-based parts can be identified using a UUID attribute on <component> elements.
+Components of 3MF containers need to be uniquely identifiable in order to ensure tracking of builds and parts through build processes. Within a given 3MF container, build items can be uniquely identified by providing a UUID for each \<item>. Individual objects (models) in a build can be uniquely identified with a UUID on each \<object> element. Individual component-based parts can be identified using a UUID attribute on \<component> elements.
 
-The Production Extension REQUIRES that both <item> and <component> elements include the UUID attribute as a mechanism to identify model instances being used in the 3MF package.
+The Production Extension REQUIRES that both \<item> and \<component> elements include the UUID attribute as a mechanism to identify model instances being used in the 3MF package.
 
-In some environments, it is crucial that the builds themselves can be uniquely identified within, and even across, different physical printers. In order to support cross-printer and cross-print-job build identification, <build> elements in the root model part REQUIRE a UUID attribute.
+In some environments, it is crucial that the builds themselves can be uniquely identified within, and even across, different physical printers. In order to support cross-printer and cross-print-job build identification, \<build> elements in the root model part REQUIRE a UUID attribute.
 
 ## 4.1 Build
 
-Element **<build>**
+Element **\<build>**
 
 ![build.png](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png)
 
@@ -176,7 +176,7 @@ Producers MUST provide a UUID in the root model file build element to ensure tha
 
 ### 4.1.1 Item
 
-Element **<item>**
+Element **\<item>**
 
 ![item.png](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png)
 
@@ -188,21 +188,21 @@ Producers MUST include UUID's for all build items for traceability across 3MF pa
 
 ## 4.2 Object
 
-Element < **object>**
+Element **\<object>**
 
 ![object.png](3MF_Production_Extension_Spec_v1.1_html_d254e86223440f10.png)
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | | A globally unique identifier for each <object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an <object> is made up of <components>, the UUID represents a unique ID for that collection of object references. |
+| UUID | **ST\_UUID** | required | | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
 
-Producers MUST include UUID's in all <object> references to ensure that each object can be reliably tracked.
+Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
 >**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always may mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
 ### 4.2.1 Component
 
-Element < **component>**
+Element **\<component>**
 
 ![component.png](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png)
 
