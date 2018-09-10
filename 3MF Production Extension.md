@@ -65,8 +65,7 @@ A consumer supporting the production extension MUST be able to consume non-exten
 
 In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension as "required extension", as defined in the core specification.
 
-1.
-# Model Relationships
+# Chapter 2. Model Relationships
 
 The primary emphasis of this extension is the possibility to store model data in files separate from the root model file and to allow the root model file's build element to reference those resources. This structural approach enables three primary advantages for producers and consumers of 3MF packages with large numbers of individual models:
 
@@ -82,17 +81,14 @@ Further, only a component element in the root model file may contain a path attr
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
-1.
-# Production Extension Data Details
+# Chapter 3. Production Extension Data Details
 
 ![](3MF_Production_Extension_Spec_v1.1_html_a21621bce13d26f8.gif)
 _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
-  1.
-## The Path Attribute
+## 3.1 The Path Attribute
 
-    1.
-### Item
+### 3.1.1 Item
 
 Within the <item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
@@ -109,8 +105,7 @@ Within the <item> element of the build section in the root model, there is a new
 
  |
 
-    1.
-### Component
+### 3.1.2 Component
 
 Within the <component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
@@ -127,8 +122,7 @@ Within the <component> elements of component-based objects, the "path" attribute
 
  |
 
-  1.
-## Path Usage
+## 3.2 Path Usage
 
 The path attribute is optional, even for 3MF containers that claim support for the production extension. It is possible to construct a 3MF package with objects both in the root model file and in other model files in the container.
 
@@ -144,8 +138,7 @@ A root model based component can be partially, or fully, composed of objects fro
 
 Because there can be only a single build section (in the root model), there is at most a single level of referenced objects in any 3MF container. This eliminates the possibility for complex or circular object references between model files in 3MF containers.
 
-  1.
-## OPC Relation Files
+## 3.3 OPC Relation Files
 
 All model files in the 3MF package must be referenced in .rels files in order to conform with OPC standards. The root model file MUST always be referenced in the root .rels file with Id="0". Example root .rels file:
 
@@ -173,8 +166,7 @@ Non-root model files must not be referenced from the root .rels file. Referenced
 
 </Relationships>
 
-1.
-# Identifying Build Components
+# Chapter 4. Identifying Build Components
 
 Components of 3MF containers need to be uniquely identifiable in order to ensure tracking of builds and parts through build processes. Within a given 3MF container, build items can be uniquely identified by providing a UUID for each <item>. Individual objects (models) in a build can be uniquely identified with a UUID on each <object> element. Individual component-based parts can be identified using a UUID attribute on <component> elements.
 
@@ -182,8 +174,7 @@ The Production Extension REQUIRES that both <item> and <component> elements incl
 
 In some environments, it is crucial that the builds themselves can be uniquely identified within, and even across, different physical printers. In order to support cross-printer and cross-print-job build identification, <build> elements in the root model part REQUIRE a UUID attribute.
 
-  1.
-## Build
+## 4.1 Build
 
 Element **<build>**
 
@@ -200,8 +191,7 @@ Element **<build>**
 
 Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
 
-    1.
-### Item
+### 4.1.1 Item
 
 Element **<item>**
 
@@ -218,8 +208,7 @@ Element **<item>**
 
 Producers MUST include UUID's for all build items for traceability across 3MF packages.
 
-  1.
-## Object
+## 4.2 Object
 
 Element < **object>**
 
@@ -236,10 +225,9 @@ Element < **object>**
 
 Producers MUST include UUID's in all <object> references to ensure that each object can be reliably tracked.
 
-**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always may mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
+>**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always may mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
-    1.
-### Component
+### 4.2.1 Component
 
 Element < **component>**
 
