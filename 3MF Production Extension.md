@@ -204,16 +204,11 @@ Producers MUST include UUID's in all <object> references to ensure that each obj
 
 Element < **component>**
 
-| Diagram | ![](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png) |
-| --- | --- |
-| attributes |
+![component](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png) |
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required |
- | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
-
- |
+| UUID | **ST\_UUID** | required | | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
 
 Producers MUST include UUID's in all component-based object references to ensure that each instance of an object can be reliably tracked.
 
