@@ -92,7 +92,7 @@ _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 Within the \<item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
-![item.png](3MF_Production_Extension_Spec_v1.1_html_f514a82f6583dc37.png)
+![item.png](images/item.png)
 
 ##### Attributes
 
@@ -105,7 +105,7 @@ Within the \<item> element of the build section in the root model, there is a ne
 
 Within the \<component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
-![component.png](3MF_Production_Extension_Spec_v1.1_html_9a645498f8c1bc2c.png)
+![component.png](images/component.png)
 
 ##### Attributes
 
@@ -165,7 +165,7 @@ In some environments, it is crucial that the builds themselves can be uniquely i
 
 Element **\<build>**
 
-![build.png](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png)
+![build.png](images/build.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
@@ -178,7 +178,7 @@ Producers MUST provide a UUID in the root model file build element to ensure tha
 
 Element **\<item>**
 
-![item2.png](3MF_Production_Extension_Spec_v1.1_html_c2b54cf4abf9b8ac.png)
+![item2.png](images/item2.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
@@ -190,7 +190,7 @@ Producers MUST include UUID's for all build items for traceability across 3MF pa
 
 Element **\<object>**
 
-![object.png](3MF_Production_Extension_Spec_v1.1_html_d254e86223440f10.png)
+![object.png](images/object.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
@@ -204,7 +204,7 @@ Producers MUST include UUID's in all \<object> references to ensure that each ob
 
 Element **\<component>**
 
-![component2.png](3MF_Production_Extension_Spec_v1.1_html_ba9641662f6aee2a.png)
+![component2.png](images/component2.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
