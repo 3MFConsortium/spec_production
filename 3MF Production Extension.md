@@ -190,16 +190,11 @@ Producers MUST include UUID's for all build items for traceability across 3MF pa
 
 Element < **object>**
 
-| Diagram | ![](3MF_Production_Extension_Spec_v1.1_html_d254e86223440f10.png) |
-| --- | --- |
-| attributes |
+![object](3MF_Production_Extension_Spec_v1.1_html_d254e86223440f10.png) |
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required |
- | | A globally unique identifier for each <object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an <object> is made up of <components>, the UUID represents a unique ID for that collection of object references. |
-
- |
+| UUID | **ST\_UUID** | required | | | A globally unique identifier for each <object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an <object> is made up of <components>, the UUID represents a unique ID for that collection of object references. |
 
 Producers MUST include UUID's in all <object> references to ensure that each object can be reliably tracked.
 
