@@ -165,16 +165,12 @@ In some environments, it is crucial that the builds themselves can be uniquely i
 
 Element **<build>**
 
-![](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png) |
-| --- | --- |
-| attributes |
+![build](3MF_Production_Extension_Spec_v1.1_html_25694ee685ab8ceb.png) |
 
 | Name | Type | Use | Default | Fixed | Annotation |
 | --- | --- | --- | --- | --- | --- |
-| uuid | **ST\_UUID** | required |
- | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
+| uuid | **ST\_UUID** | required | | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
 
- |
 
 Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
 
