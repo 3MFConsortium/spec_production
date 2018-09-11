@@ -22,7 +22,26 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
 
 ## Table of Contents
 
-TBC
+- [Preface](#preface)
+  * [1.1 About this Specification](#11-about-this-specification)
+  * [Document Conventions](#document-conventions)
+  * [Language Notes](#language-notes)
+  * [Software Conformance](#software-conformance)
+- [Part I: 3MF Production Extension](#part-i-3mf-production-extension)
+- [Chapter 1. Overview of Additions](#chapter-1-overview-of-additions)
+- [Chapter 2. Model Relationships](#chapter-2-model-relationships)
+- [Chapter 3. Production Extension Data Details](#chapter-3-production-extension-data-details)
+  * [3.1 The Path Attribute](#31-the-path-attribute)
+  * [3.2 Path Usage](#32-path-usage)
+  * [3.3 OPC Relation Files](#33-opc-relation-files)
+- [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
+  * [4.1 Build](#41-build)
+  * [4.2 Object](#42-object)
+- [Part II. Appendixes](#part-ii-appendixes)
+  * [Appendix A. Glossary](#appendix-a-glossary)
+  * [Appendix B. 3MF Production Extension Schema](#appendix-b-3mf-production-extension-schema)
+  * [Appendix C. Standard Namespaces and Content Types](#appendix-c-standard-namespaces-and-content-types)
+- [References](#references)
 
 # Preface
 
@@ -214,11 +233,11 @@ Producers MUST include UUID's in all component-based object references to ensure
 
 # Part II. Appendixes
 
-# Appendix A. Glossary
+## Appendix A. Glossary
 
 See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
 
-# Appendix B. 3MF Production Extension Schema
+## Appendix B. 3MF Production Extension Schema
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -284,9 +303,9 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 </xs:schema>
 ```
 
-# Appendix C. Standard Namespaces and Content Types
+## Appendix C. Standard Namespaces and Content Types
 
-## C.1 Namespaces
+### C.1 Namespaces
 
 Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
 
