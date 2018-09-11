@@ -111,7 +111,7 @@ _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 Within the \<item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
-![item2.png](images/item.png)
+![item2.png](images/item2.png)
 
 ##### Attributes
 
@@ -124,7 +124,7 @@ Within the \<item> element of the build section in the root model, there is a ne
 
 Within the \<component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
-![component2.png](images/component.png)
+![component2.png](images/component2.png)
 
 ##### Attributes
 
