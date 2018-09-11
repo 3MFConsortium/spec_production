@@ -80,6 +80,8 @@ In order to allow for the use of 3MF in high production printing environments, s
 - Enable the 3MF \<build> elements to address objects in separate files within the 3MF package
 - Identify each build, each object and each copy of a part with unique identifiers
 
+>**Note:** "Unique identifier" MUST be any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
+
 A consumer supporting the production extension MUST be able to consume non-extended core 3MFs, even if this is not as efficient. As the production extension is just a reorganization of data, a consumer MAY convert a generic core 3MF into a "production extended 3MF" before internally processing the data.
 
 In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension as "required extension", as defined in the core specification.
@@ -178,7 +180,7 @@ Components of 3MF containers need to be uniquely identifiable in order to ensure
 
 The Production Extension REQUIRES that both \<item> and \<component> elements include the UUID attribute as a mechanism to identify model instances being used in the 3MF package.
 
-In some environments, it is crucial that the builds themselves can be uniquely identified within, and even across, different physical printers. In order to support cross-printer and cross-print-job build identification, \<build> elements in the root model part REQUIRE a UUID attribute.
+In some environments, it is crucial that the builds themselves can be uniquely identified within, and even across, different physical devices. In order to support cross-printer and cross-print-job build identification, \<build> elements in the root model part REQUIRE a UUID attribute.
 
 ## 4.1 Build
 
@@ -216,8 +218,6 @@ Element **\<object>**
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
-
->**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always MAY mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
 ### 4.2.1 Component
 
