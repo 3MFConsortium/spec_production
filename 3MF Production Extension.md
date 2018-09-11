@@ -96,7 +96,7 @@ The root model part MAY have relationships to other model parts, whose object re
 
 As defined in the core 3MF spec, only the build section of the root model file contains valid build information. Other model streams SHOULD contain empty build sections. Every consumer MUST ignore the build section entries of all referenced child model files.
 
-Further, only a component element in the root model file may contain a path attribute. Non-root model file components MUST only reference objects in the same model file.
+Further, only a component element in the root model file MAY contain a path attribute. Non-root model file components MUST only reference objects in the same model file.
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
@@ -139,7 +139,7 @@ The path attribute is optional, even for 3MF containers that claim support for t
 
 Some considerations for using multiple file 3MF constructions with the path attribute:
 
-Objects referenced by the path and objectid attribute of the build item inherit all of their properties from their own object definition and resources. All of the resources associated with the referenced object (textures, materials, thumbnails, name, part number, etc.) must come from the referenced object file.
+Objects referenced by the path and objectid attribute of the build item inherit all of their properties from their own object definition and resources. All of the resources associated with the referenced object (textures, materials, thumbnails, name, part number, etc.) MUST come from the referenced object file.
 
 The model level Metadata element is only valid in the root model file of a 3MF package. All Metadata elements in other model files in a 3MF package will be ignored.
 
@@ -151,7 +151,7 @@ Because there can be only a single build section (in the root model), there is a
 
 ## 3.3 OPC Relation Files
 
-All model files in the 3MF package must be referenced in .rels files in order to conform with OPC standards. The root model file MUST always be referenced in the root .rels file with Id="0". Example root .rels file:
+All model files in the 3MF package MUST be referenced in .rels files in order to conform with OPC standards. The root model file MUST always be referenced in the root .rels file. Example root .rels file:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
     <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -160,7 +160,7 @@ All model files in the 3MF package must be referenced in .rels files in order to
 </Relationships>
 ```
 
-Non-root model files must not be referenced from the root .rels file. Referenced model files must be included the .rels file from the referencing model file according to the part relationship defined in OPC. For example, assuming that the root model file in the /3D folder is named model.model, the non-root model file references must be in the /3D/\_rels/model.model.rels file:
+Non-root model files MUST not be referenced from the root .rels file. Referenced model files MUST be included the .rels file from the referencing model file according to the part relationship defined in OPC. For example, assuming that the root model file in the /3D folder is named model.model, the non-root model file references MUST be in the /3D/\_rels/model.model.rels file:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -217,7 +217,7 @@ Element **\<object>**
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
->**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always may mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
+>**Note:** As for the use case of production data, the uniqueness properties are sufficient, this specification tries to avoid the technical details about conforming UUIDs according to [ITU-T X.667 ISO/IEC 9834-8:2004](http://www.itu.int/ITU-T/studygroups/com17/oid.html). "Unique identifier" always MAY mean any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
 ### 4.2.1 Component
 
