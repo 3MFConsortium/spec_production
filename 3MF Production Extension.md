@@ -124,7 +124,7 @@ Within the \<item> element of the build section in the root model, there is a ne
 
 Within the \<component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
-![component2.png](images/component2.png)
+![component.png](images/component.png)
 
 ##### Attributes
 
@@ -197,7 +197,7 @@ Producers MUST provide a UUID in the root model file build element to ensure tha
 
 Element **\<item>**
 
-![item2.png](images/item2.png)
+![item.png](images/item.png)
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
