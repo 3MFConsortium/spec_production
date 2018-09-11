@@ -12,7 +12,7 @@
 
 
 
-| **Version** | 1.1 |
+| **Version** | 1.1.1 |
 | --- | --- |
 | **Status** | Published |
 
@@ -55,7 +55,7 @@ Part II, "Appendixes," contains additional technical details and schemas too ext
 
 The information contained in this specification is subject to change. Every effort has been made to ensure its accuracy at the time of publication.
 
-This extension MUST be used only with Core specification 1.0.
+This extension MUST be used only with Core specification 1.x.
 
 ## Document Conventions
 
@@ -111,26 +111,26 @@ _Figure 3–1. A typical production 3MF Document with multiple model streams_
 
 Within the \<item> element of the build section in the root model, there is a new, optional attribute called "path". Path is an absolute path to the target model file inside the 3MF container that contains the target object. When the path attribute is used, objectid becomes a reference to the object within the referenced model.
 
-![item.png](images/item.png)
+![item2.png](images/item.png)
 
 ##### Attributes
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
 
 ### 3.1.2 Component
 
 Within the \<component> elements of component-based objects, the "path" attribute references objects in non-root model files. Path is an absolute path to the target model file inside the 3MF container that contains the target object. The use of the path attribute in a component element is ONLY valid in the root model file.
 
-![component.png](images/component.png)
+![component2.png](images/component.png)
 
 ##### Attributes
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
-| path | **ST\_Path** | required | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
 
 ## 3.2 Path Usage
