@@ -273,17 +273,6 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
         <xs:attribute name="thumbnail" type="ST_UriReference"/>
         <xs:attribute name="partnumber" type="xs:string"/>
         <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="slicestackid" type="ST_ResourceID"/>
-        <xs:attribute name="slicepath" type="xs:string"/>
-        <xs:attribute name="meshresolution" type="xs:string">
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="build" />
-                    <xs:enumeration value="preview" />
-                    <xs:enumeration value="boundingbox" />
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
         <xs:anyAttribute namespace="##other" processContents="lax"/>
     </xs:complexType>
 
