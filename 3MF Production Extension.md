@@ -160,7 +160,7 @@ All model files in the 3MF package MUST be referenced in .rels files in order to
 </Relationships>
 ```
 
-Non-root model files MUST not be referenced from the root .rels file. Referenced model files MUST be included the .rels file from the referencing model file according to the part relationship defined in OPC. For example, assuming that the root model file in the /3D folder is named model.model, the non-root model file references MUST be in the /3D/\_rels/model.model.rels file:
+Non-root model files MUST not be referenced from the root .rels file. Referenced model files MUST be included in the .rels file from the referencing model file according to the part relationship defined in OPC. For example, assuming that the root model file in the /3D folder is named model.model, the non-root model file references MUST be in the /3D/\_rels/model.model.rels file:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
