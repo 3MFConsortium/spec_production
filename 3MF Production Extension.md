@@ -12,9 +12,9 @@
 
 
 
-| **Version** | 1.1.1 |
+| **Version** | 1.1.2 |
 | --- | --- |
-| **Status** | Published |
+| **Status** | Draft |
 
 ## Disclaimer
 
@@ -61,7 +61,7 @@ This extension MUST be used only with Core specification 1.x.
 
 See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
-In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#D.1-Namespaces).
+In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#d1-namespaces).
 
 ## Language Notes
 
