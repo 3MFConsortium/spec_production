@@ -61,6 +61,8 @@ This extension MUST be used only with Core specification 1.x.
 
 See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
+In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#D.1-Namespaces).
+
 ## Language Notes
 
 See [the 3MF Core Specification language notes](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#language-notes).
@@ -292,9 +294,55 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 </xs:schema>
 ```
 
-## Appendix C. Standard Namespaces and Content Types
+## Appendix C. 3MF Samples
 
-### C.1 Namespaces
+### C.1. Simple Production Sample
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" unit="millimeter" xml:lang="en-US" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06">
+   	<metadata name="Copyright">Copyright (c) 2018 3MF Consortium. All rights reserved.</metadata>
+	<resources>
+		<object id="1" name="box" type="model" thumbnail="/Thumbnails/box.png" p:UUID="01cbb956-1d24-062d-fbe6-7362e5727594">
+			<mesh>
+				<vertices>
+					<vertex x="35.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="53.00000" z="46.92000" />
+					<vertex x="35.00000" y="53.00000" z="46.92000" />
+				</vertices>
+				<triangles>
+					<triangle v1="3" v2="2" v3="1" />
+					<triangle v1="1" v2="0" v3="3" />
+					<triangle v1="4" v2="5" v3="6" />
+					<triangle v1="6" v2="7" v3="4" />
+					<triangle v1="0" v2="1" v3="5" />
+					<triangle v1="5" v2="4" v3="0" />
+					<triangle v1="1" v2="2" v3="6" />
+					<triangle v1="6" v2="5" v3="1" />
+					<triangle v1="2" v2="3" v3="7" />
+					<triangle v1="7" v2="6" v3="2" />
+					<triangle v1="3" v2="0" v3="4" />
+					<triangle v1="4" v2="7" v3="3" />
+				</triangles>
+			</mesh>
+		</object>
+	</resources>
+	<build p:UUID="96681a5d-5b0f-e592-8c51-da7ed587cb5f">
+		<item objectid="1" p:UUID="b3de5826-ccb6-3dbc-d6c4-29a2d730766c" />
+	</build>
+</model>
+```
+![Simple Production Example with UUID](images/box.png)
+
+See more examples in [3MF Production Specification examples](https://github.com/3MFConsortium/3mf-samples/tree/master/examples/production)
+
+## Appendix D. Standard Namespaces and Content Types
+
+### D.1 Namespaces
 
 Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
 
