@@ -125,6 +125,7 @@ Within the \<item> element of the build section in the root model, there is a ne
 | --- | --- | --- | --- | --- |
 | path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| @anyAttribute | | | | |
 
 ### 3.1.2 Component
 
@@ -210,6 +211,7 @@ Element **\<item>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| @anyAttribute | | | | |
 
 Producers MUST include UUID's for all build items for traceability across 3MF packages.
 
@@ -269,54 +271,80 @@ See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
-    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
-    <!-- Complex Types -->
+	<!-- Complex Types -->
 
-    <xs:complexType name="CT_Item">
-        <xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="path" type="ST_Path"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-    </xs:complexType>
+	<xs:complexType name="CT_Item">
+		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
+		<xs:attribute name="path" type="ST_Path"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 
-     <xs:complexType name="CT_Component">
-        <xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="path" type="ST_Path"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-     </xs:complexType>
+	<xs:complexType name="CT_Component">
+		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
+		<xs:attribute name="path" type="ST_Path"/>
+		<xs:attribute name="uuid" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 
-    <xs:complexType name="CT_Object">
-        <xs:choice>
-            <xs:element ref="mesh"/>
-            <xs:element ref="components"/>
-        </xs:choice>
-        <xs:attribute name="id" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:attribute name="type" type="ST_ObjectType" default="model"/>
-        <xs:attribute name="pid" type="ST_ResourceID"/>
-        <xs:attribute name="pindex" type="ST_ResourceIndex"/>
-        <xs:attribute name="thumbnail" type="ST_UriReference"/>
-        <xs:attribute name="partnumber" type="xs:string"/>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-    </xs:complexType>
+	<xs:complexType name="CT_Object">
+		<xs:element ref="metadatagroup" minOccurs="0" maxOccurs="1"/>
+		<xs:choice>
+			<xs:element ref="mesh"/>
+			<xs:element ref="components"/>
+		</xs:choice>
+		<xs:element ref="alternative" minOccurs="0" maxOccurs="2147483647"/>
+		<xs:attribute name="id" type="ST_ResourceID" use="required"/>
+		<xs:attribute name="type" type="ST_ObjectType" default="model"/>
+		<xs:attribute name="pid" type="ST_ResourceID"/>
+		<xs:attribute name="pindex" type="ST_ResourceIndex"/>
+		<xs:attribute name="thumbnail" type="ST_UriReference"/>
+		<xs:attribute name="partnumber" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:attribute name="meshresolution" type="ST_MeshResolution" default="fullres"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
+	</xs:complexType>
 
-    <!-- Simple Types -->
+	<xs:complexType name="CT_Alternative">
+		<xs:attribute name="path" type="ST_Path" use="required"/>
+		<xs:attribute name="meshresolution" type="ST_MeshResolution" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	
+	<!-- Simple Types -->
 
-    <xs:simpleType name="ST_Path">
-        <xs:restriction base="xs:string">
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="ST_UUID">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
-        </xs:restriction>
-    </xs:simpleType>
-
+	<xs:simpleType name="ST_Path">
+		<xs:restriction base="xs:string"> </xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_UUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ST_MeshResolution">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fullres"/>
+			<xs:enumeration value="lowres"/>
+			<xs:enumeration value="obfuscated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Elements -->
+	<xs:element name="metadatagroup" type="CT_MetadataGroup"/>
+	<xs:element name="item" type="CT_Item"/>
+	<xs:element name="component" type="CT_Component"/>
+	<xs:element name="object" type="CT_Object"/>
+	<xs:element name="alternative" type="CT_Alternative"/>
+	
 </xs:schema>
 ```
 
