@@ -12,9 +12,9 @@
 
 
 
-| **Version** | 1.1.2 |
+| **Version** | 1.2 |
 | --- | --- |
-| **Status** | Published |
+| **Status** | Draft |
 
 ## Disclaimer
 
@@ -23,20 +23,21 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
 ## Table of Contents
 
 - [Preface](#preface)
-  * [1.1 About this Specification](#11-about-this-specification)
+  * [About this Specification](#about-this-specification)
   * [Document Conventions](#document-conventions)
   * [Language Notes](#language-notes)
   * [Software Conformance](#software-conformance)
 - [Part I: 3MF Production Extension](#part-i-3mf-production-extension)
-- [Chapter 1. Overview of Additions](#chapter-1-overview-of-additions)
-- [Chapter 2. Model Relationships](#chapter-2-model-relationships)
-- [Chapter 3. Production Extension Data Details](#chapter-3-production-extension-data-details)
-  * [3.1 The Path Attribute](#31-the-path-attribute)
-  * [3.2 Path Usage](#32-path-usage)
-  * [3.3 OPC Relation Files](#33-opc-relation-files)
-- [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
-  * [4.1 Build](#41-build)
-  * [4.2 Object](#42-object)
+  * [Chapter 1. Overview of Additions](#chapter-1-overview-of-additions)
+  * [Chapter 2. Model Relationships](#chapter-2-model-relationships)
+  * [Chapter 3. Production Extension Data Details](#chapter-3-production-extension-data-details)
+    + [3.1 The Path Attribute](#31-the-path-attribute)
+    + [3.2 Path Usage](#32-path-usage)
+    + [3.3 OPC Relation Files](#33-opc-relation-files)
+  * [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
+    + [4.1 Build](#41-build)
+    + [4.2 Object](#42-object)
+  * [Chapter 5. Alternative Model Representation](#chapter-5-alternative-model-representation)
 - [Part II. Appendixes](#part-ii-appendixes)
   * [Appendix A. Glossary](#appendix-a-glossary)
   * [Appendix B. 3MF Production Extension Schema](#appendix-b-3mf-production-extension-schema)
@@ -45,7 +46,7 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
 
 # Preface
 
-## 1.1 About this Specification
+## About this Specification
 
 This 3MF Production Extension specification is an extension to the core 3MF specification. This document cannot stand alone and only applies as an addendum to the core 3MF specification. Usage of this and any other 3MF extensions follow an a la carte model, defined in the core 3MF specification.
 
@@ -59,17 +60,17 @@ This extension MUST be used only with Core specification 1.x.
 
 ## Document Conventions
 
-See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
+See the [3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
 In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#d1-namespaces).
 
 ## Language Notes
 
-See [the 3MF Core Specification language notes](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#language-notes).
+See the [3MF Core Specification language notes](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#language-notes).
 
 ## Software Conformance
 
-See [the 3MF Core Specification software conformance](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#software-conformance).
+See the [3MF Core Specification software conformance](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#software-conformance).
 
 # Part I: 3MF Production Extension
 
@@ -81,6 +82,7 @@ In order to allow for the use of 3MF in high production printing environments, s
 
 - Enable the 3MF \<build> elements to address objects in separate files within the 3MF package
 - Identify each build, each object and each copy of a part with unique identifiers
+- Define alternate model representations targetted to different applications, where some of those models might be protected.
 
 >**Note:** "Unique identifier" MUST be any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
@@ -136,6 +138,7 @@ Within the \<component> elements of component-based objects, the "path" attribut
 | --- | --- | --- | --- | --- |
 | path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| @anyAttribute | | | | |
 
 ## 3.2 Path Usage
 
@@ -193,6 +196,7 @@ Element **\<build>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | uuid | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
+| @anyAttribute | | | | |
 
 
 Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
@@ -218,6 +222,8 @@ Element **\<object>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
+| meshresolution | **ST\_MeshResolution** |  | fullres  | Indicates the intended use of the object model when there are alternative representiations. |
+| @anyAttribute | | | | |
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
@@ -226,18 +232,38 @@ Producers MUST include UUID's in all \<object> references to ensure that each ob
 Element **\<component>**
 
 ![component.png](images/component.png)
-
+*
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. | @anyAttribute | | | | |
 
 Producers MUST include UUID's in all component-based object references to ensure that each instance of an object can be reliably tracked.
+
+### 4.2.2 Alternative
+
+Element **\<alternative>**
+
+![component.png](images/alternative.png)
+*
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| meshresolution | **ST\_MeshResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
+| @anyAttribute | | | | |
+
+The \<alternative> element provides a way to specify alternative representations of a given model. For example applications that do not require a high resolution of the representation migt use a lower resolution to perform their job.
+
+When this is used in conjunction with the [3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
+
+The use of alternative representations MUST NOT be restricted to the root model. Any model file MAY have alternative representations.
+
+[NOTE: when several representation are available to a consumer, which one to choose???]
 
 # Part II. Appendixes
 
 ## Appendix A. Glossary
 
-See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
+See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
 
 ## Appendix B. 3MF Production Extension Schema
 
@@ -348,6 +374,6 @@ Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
 
 # References
 
-See [the 3MF Core Specification references](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#references).
+See the [3MF Core Specification references](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#references).
 
 Copyright 3MF Consortium 2018.
