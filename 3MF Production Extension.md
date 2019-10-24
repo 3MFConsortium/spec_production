@@ -232,7 +232,7 @@ Producers MUST include UUID's in all \<object> references to ensure that each ob
 Element **\<component>**
 
 ![component.png](images/component.png)
-*
+
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. | @anyAttribute | | | | |
@@ -244,7 +244,7 @@ Producers MUST include UUID's in all component-based object references to ensure
 Element **\<alternative>**
 
 ![component.png](images/alternative.png)
-*
+
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
