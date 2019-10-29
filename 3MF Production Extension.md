@@ -224,7 +224,7 @@ Element **\<object>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
-| meshresolution | **ST\_MeshResolution** |  | fullres  | Indicates the intended use of the object model when there are alternative representiations. |
+| modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use of the object model when there are alternative representiations. |
 | @anyAttribute | | | | |
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
@@ -247,11 +247,13 @@ Element **\<alternative>**
 
 ![component.png](images/alternatives.png)
 
-The \<alternatives> element group provides a way to specify alternative representations of a given model. For example applications that do not require a high resolution of the representation migt use a lower resolution to perform their job.
+The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a production printer.
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
 
-When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. The producer MUST generate a 3MF file with no ambiguity for the consumer.
+When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights.
+
+The producer MUST generate a 3MF file with no ambiguity for the consumer.
 
 ### 4.2.2.1 Alternative
 
@@ -263,7 +265,7 @@ Element **\<alternative>**
 | --- | --- | --- | --- | --- |
 | objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
-| meshresolution | **ST\_MeshResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
+| modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
 
 The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
@@ -323,7 +325,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		<xs:attribute name="partnumber" type="xs:string"/>
 		<xs:attribute name="name" type="xs:string"/>
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
-		<xs:attribute name="meshresolution" type="ST_MeshResolution" default="fullres"/>
+		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 
@@ -337,7 +339,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	<xs:complexType name="CT_Alternative">
 		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="path" type="ST_Path" use="required"/>
-		<xs:attribute name="meshresolution" type="ST_MeshResolution" use="required"/>
+		<xs:attribute name="modelresolution" type="ST_ModelResolution" use="required"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 	
@@ -356,7 +358,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="ST_MeshResolution">
+	<xs:simpleType name="ST_ModelResolution">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="fullres"/>
 			<xs:enumeration value="lowres"/>
