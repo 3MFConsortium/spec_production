@@ -60,17 +60,17 @@ This extension MUST be used only with Core specification 1.x.
 
 ## Document Conventions
 
-See the [3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
+See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
 In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#d1-namespaces).
 
 ## Language Notes
 
-See the [3MF Core Specification language notes](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#language-notes).
+See [the 3MF Core Specification language notes](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#language-notes).
 
 ## Software Conformance
 
-See the [3MF Core Specification software conformance](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#software-conformance).
+See [the 3MF Core Specification software conformance](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#software-conformance).
 
 # Part I: 3MF Production Extension
 
@@ -82,7 +82,7 @@ In order to allow for the use of 3MF in high production printing environments, s
 
 - Enable the 3MF \<build> elements to address objects in separate files within the 3MF package
 - Identify each build, each object and each copy of a part with unique identifiers
-- Define alternate model representations targetted to different applications, where some of those models might be protected.
+- Define alternative model representations targeted to different applications, where some of those models might be protected.
 
 >**Note:** "Unique identifier" MUST be any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
@@ -241,7 +241,19 @@ Element **\<component>**
 
 Producers MUST include UUID's in all component-based object references to ensure that each instance of an object can be reliably tracked.
 
-### 4.2.2 Alternative
+### 4.2.2 Alternatives
+
+Element **\<alternative>**
+
+![component.png](images/alternatives.png)
+
+The \<alternatives> element group provides a way to specify alternative representations of a given model. For example applications that do not require a high resolution of the representation migt use a lower resolution to perform their job.
+
+When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
+
+When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. The producer MUST generate a 3MF file with no ambiguity for the consumer.
+
+### 4.2.2.1 Alternative
 
 Element **\<alternative>**
 
@@ -249,23 +261,22 @@ Element **\<alternative>**
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
+| objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | meshresolution | **ST\_MeshResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
 
-The \<alternative> element provides a way to specify alternative representations of a given model. For example applications that do not require a high resolution of the representation migt use a lower resolution to perform their job.
+The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
 
-When this is used in conjunction with the [3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
+Only an object in the root model file MAY contain alternative representations. Non-root model file object MUST only reference objects in the same model file.
 
-The use of alternative representations MUST NOT be restricted to the root model. Any model file MAY have alternative representations.
-
-[NOTE: when several representation are available to a consumer, which one to choose???]
+These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
 # Part II. Appendixes
 
 ## Appendix A. Glossary
 
-See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
+See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
 
 ## Appendix B. 3MF Production Extension Schema
 
@@ -295,12 +306,15 @@ See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	</xs:complexType>
 
 	<xs:complexType name="CT_Object">
-		<xs:element ref="metadatagroup" minOccurs="0" maxOccurs="1"/>
-		<xs:choice>
-			<xs:element ref="mesh"/>
-			<xs:element ref="components"/>
-		</xs:choice>
-		<xs:element ref="alternative" minOccurs="0" maxOccurs="2147483647"/>
+		<xs:sequence>
+			<xs:element ref="metadatagroup" minOccurs="0" maxOccurs="1"/>
+			<xs:choice>
+				<xs:element ref="mesh"/>
+				<xs:element ref="components"/>
+			</xs:choice>
+			<xs:element ref="alternatives" minOccurs="0" maxOccurs="1"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
 		<xs:attribute name="id" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="type" type="ST_ObjectType" default="model"/>
 		<xs:attribute name="pid" type="ST_ResourceID"/>
@@ -311,10 +325,17 @@ See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:attribute name="meshresolution" type="ST_MeshResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
-		<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
 	</xs:complexType>
 
+	<xs:complexType name="CT_Alternatives">
+		<xs:sequence>
+			<xs:element ref="alternative" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	
 	<xs:complexType name="CT_Alternative">
+		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="path" type="ST_Path" use="required"/>
 		<xs:attribute name="meshresolution" type="ST_MeshResolution" use="required"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
@@ -322,6 +343,11 @@ See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	
 	<!-- Simple Types -->
 
+	<xs:simpleType name="ST_ResourceID">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxExclusive value="2147483648"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="ST_Path">
 		<xs:restriction base="xs:string"> </xs:restriction>
 	</xs:simpleType>
@@ -343,6 +369,7 @@ See the [3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	<xs:element name="item" type="CT_Item"/>
 	<xs:element name="component" type="CT_Component"/>
 	<xs:element name="object" type="CT_Object"/>
+	<xs:element name="alternatives" type="CT_Alternatives"/>
 	<xs:element name="alternative" type="CT_Alternative"/>
 	
 </xs:schema>
@@ -402,6 +429,6 @@ Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
 
 # References
 
-See the [3MF Core Specification references](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#references).
+See [the 3MF Core Specification references](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#references).
 
 Copyright 3MF Consortium 2018.
