@@ -251,9 +251,9 @@ The \<alternatives> element group provides a way to specify alternative represen
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
 
-When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights.
+When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres. And a printer might reject to print a lowres model.
 
-The producer MUST generate a 3MF file with no ambiguity for the consumer.
+The producer MUST generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MAY decide which one to select, and the producer MAY not infer which one.
 
 ### 4.2.2.1 Alternative
 
