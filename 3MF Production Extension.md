@@ -62,7 +62,7 @@ This extension MUST be used only with Core specification 1.x.
 
 See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
-In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#d1-namespaces).
+In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06", as defined in 1.x, and the prefix "pa" maps to the xml namespace "http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04". See Appendix [D.1 Namespaces](#d1-namespaces).
 
 ## Language Notes
 
@@ -88,7 +88,7 @@ In order to allow for the use of 3MF in high production printing environments, s
 
 A consumer supporting the production extension MUST be able to consume non-extended core 3MFs, even if this is not as efficient. As the production extension is just a reorganization of data, a consumer MAY convert a generic core 3MF into a "production extended 3MF" before internally processing the data.
 
-In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension as "required extension", as defined in the core specification.
+In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension(s) as "required extension", as defined in the core specification.
 
 # Chapter 2. Model Relationships
 
@@ -280,7 +280,9 @@ These two limitations ensure there is only a single level of "depth" to multi-fi
 
 See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
 
-## Appendix B. 3MF Production Extension Schema
+## Appendix B. 3MF XSD Schema
+
+### B.1. Production Schema
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -294,37 +296,73 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	<!-- Complex Types -->
 
 	<xs:complexType name="CT_Item">
-		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="path" type="ST_Path"/>
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 
 	<xs:complexType name="CT_Component">
-		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="path" type="ST_Path"/>
-		<xs:attribute name="uuid" type="ST_UUID" use="required"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 
+    <xs:complexType name="CT_Object">
+        <xs:attribute name="id" type="ST_ResourceID" use="required"/>
+        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+	
+	<xs:complexType name="CT_Build">
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+
+	<!-- Simple Types -->
+
+	<xs:simpleType name="ST_ResourceID">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxExclusive value="2147483648"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_Path">
+		<xs:restriction base="xs:string"> </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_UUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Elements -->
+	<xs:element name="item" type="CT_Item"/>
+	<xs:element name="component" type="CT_Component"/>
+	<xs:element name="object" type="CT_Object"/>
+	<xs:element name="build" type="CT_Build"/>
+	
+</xs:schema>
+```
+
+### B.2. Production Alternatives Schema
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+	<!-- Complex Types -->
+
 	<xs:complexType name="CT_Object">
 		<xs:sequence>
-			<xs:element ref="metadatagroup" minOccurs="0" maxOccurs="1"/>
-			<xs:choice>
-				<xs:element ref="mesh"/>
-				<xs:element ref="components"/>
-			</xs:choice>
 			<xs:element ref="alternatives" minOccurs="0" maxOccurs="1"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
 		</xs:sequence>
-		<xs:attribute name="id" type="ST_ResourceID" use="required"/>
-		<xs:attribute name="type" type="ST_ObjectType" default="model"/>
-		<xs:attribute name="pid" type="ST_ResourceID"/>
-		<xs:attribute name="pindex" type="ST_ResourceIndex"/>
-		<xs:attribute name="thumbnail" type="ST_UriReference"/>
-		<xs:attribute name="partnumber" type="xs:string"/>
-		<xs:attribute name="name" type="xs:string"/>
-		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
@@ -350,14 +388,11 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 			<xs:maxExclusive value="2147483648"/>
 		</xs:restriction>
 	</xs:simpleType>
+	
 	<xs:simpleType name="ST_Path">
 		<xs:restriction base="xs:string"> </xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="ST_UUID">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
-		</xs:restriction>
-	</xs:simpleType>
+	
 	<xs:simpleType name="ST_ModelResolution">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="fullres"/>
@@ -367,9 +402,6 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	</xs:simpleType>
 	
 	<!-- Elements -->
-	<xs:element name="metadatagroup" type="CT_MetadataGroup"/>
-	<xs:element name="item" type="CT_Item"/>
-	<xs:element name="component" type="CT_Component"/>
 	<xs:element name="object" type="CT_Object"/>
 	<xs:element name="alternatives" type="CT_Alternatives"/>
 	<xs:element name="alternative" type="CT_Alternative"/>
@@ -421,6 +453,55 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 ```
 ![Simple Production Example with UUID](images/box.png)
 
+### C.2. Alternatives Production Sample
+
+Same example as in C2 but with a low resolution default model an alternative representation at full resolution.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" unit="millimeter" xml:lang="en-US" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+xmlns:pa="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04">
+   	<metadata name="Copyright">Copyright (c) 2021 3MF Consortium. All rights reserved.</metadata>
+	<resources>
+		<object id="1" name="MyModel" type="model" pa:modelresolution="lowres"
+		thumbnail="/Thumbnails/MyModel.png" p:UUID="1c5385ee-9399-47c4-88dd-22b61d3d3598" >
+			<mesh>
+				<vertices>
+					<vertex x="35.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="53.00000" z="46.92000" />
+					<vertex x="35.00000" y="53.00000" z="46.92000" />
+				</vertices>
+				<triangles>
+					<triangle v1="3" v2="2" v3="1" />
+					<triangle v1="1" v2="0" v3="3" />
+					<triangle v1="4" v2="5" v3="6" />
+					<triangle v1="6" v2="7" v3="4" />
+					<triangle v1="0" v2="1" v3="5" />
+					<triangle v1="5" v2="4" v3="0" />
+					<triangle v1="1" v2="2" v3="6" />
+					<triangle v1="6" v2="5" v3="1" />
+					<triangle v1="2" v2="3" v3="7" />
+					<triangle v1="7" v2="6" v3="2" />
+					<triangle v1="3" v2="0" v3="4" />
+					<triangle v1="4" v2="7" v3="3" />
+				</triangles>
+			</mesh>
+	  		<pa:alternatives>
+				<pa:alternative objectid="11" path="MyModel.model" modelresolution="fullres"/>
+	  		</pa:alternatives>
+		</object>
+	</resources>
+	<build p:UUID="98d328dc-6378-4f4b-880f-8c6e0ed980e2">
+		<item objectid="1" p:UUID="9b344c24-5605-4d74-9d44-9e515d9520f7" />
+	</build>
+</model>
+```
+
 See more examples in [3MF Production Specification examples](https://github.com/3MFConsortium/3mf-samples/tree/master/examples/production)
 
 ## Appendix D. Standard Namespaces and Content Types
@@ -428,6 +509,8 @@ See more examples in [3MF Production Specification examples](https://github.com/
 ### D.1 Namespaces
 
 Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
+
+Alternatives http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04
 
 # References
 
