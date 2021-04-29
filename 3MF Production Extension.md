@@ -402,6 +402,12 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		<xs:restriction base="xs:string"> </xs:restriction>
 	</xs:simpleType>
 	
+	<xs:simpleType name="ST_UUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:simpleType name="ST_ModelResolution">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="fullres"/>
