@@ -37,7 +37,6 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
   * [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
     + [4.1 Build](#41-build)
     + [4.2 Object](#42-object)
-  * [Chapter 5. Alternative Model Representation](#chapter-5-alternative-model-representation)
 - [Part II. Appendixes](#part-ii-appendixes)
   * [Appendix A. Glossary](#appendix-a-glossary)
   * [Appendix B. 3MF Production Extension Schema](#appendix-b-3mf-production-extension-schema)
