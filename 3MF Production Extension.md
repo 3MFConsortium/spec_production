@@ -263,7 +263,7 @@ Element **\<alternative>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
-| UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model in an external DRM system |
+| UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model. |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
