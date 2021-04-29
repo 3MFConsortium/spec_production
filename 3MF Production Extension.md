@@ -263,6 +263,7 @@ Element **\<alternative>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
+| UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model in an external DRM system |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
@@ -272,6 +273,14 @@ The \<alternative> element specifies an alternative representations of a given m
 Only an object in the root model file MAY contain alternative representations. Non-root model file object MUST only reference objects in the same model file.
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
+
+The *modelresolution* element specify the intent of the model:
+
+* *fullres*: the model is a high resolution and it is intended for printing. It SHOULD be only one fullres model in the object.
+* *lowres*: the model is low resolution, for example for visualization purposes, and not intended for printing. Printers SHOULD reject lowres models.
+* *obfuscated*: the intent of the model is to provide a high resolution of the model by hiding some sensitive zones, for example, for privacy purposes. The model MIGHT still be printable. A printer SHOULD reject an obfuscated model unless specifically instructed.
+
+The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
 
 # Part II. Appendixes
 
@@ -375,8 +384,9 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	
 	<xs:complexType name="CT_Alternative">
 		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
+        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:attribute name="path" type="ST_Path" use="required"/>
-		<xs:attribute name="modelresolution" type="ST_ModelResolution" use="required"/>
+		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 	
