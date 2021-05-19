@@ -250,7 +250,7 @@ The \<alternatives> element group provides a way to specify alternative represen
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
 
-When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres. And a printer might reject to print a lowres model.
+When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
 
 The producer MUST generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MAY decide which one to select, and the producer MAY not infer which one.
 
@@ -276,9 +276,11 @@ These two limitations ensure there is only a single level of "depth" to multi-fi
 
 The *modelresolution* element specify the intent of the model:
 
-* *fullres*: the model is a high resolution and it is intended for printing. It SHOULD be only one fullres model in the object.
-* *lowres*: the model is low resolution, for example for visualization purposes, and not intended for printing. Printers SHOULD reject lowres models.
-* *obfuscated*: the intent of the model is to provide a high resolution of the model by hiding some sensitive zones, for example, for privacy purposes. The model MIGHT still be printable. A printer SHOULD reject an obfuscated model unless specifically instructed.
+* *fullres*: the model is a high resolution and it is intended for printing. It MUST be only one "fullres" model in the object.
+* *lowres*: the model is low resolution, for example for visualization purposes.
+* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes. 
+
+A printer MUST reject models without a "fullres" representation available for printing. For example, if the model file is encrypted the printer MUST be able to decrypt it.
 
 The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
 
@@ -383,8 +385,11 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 	</xs:complexType>
 	
 	<xs:complexType name="CT_Alternative">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
 		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:attribute name="path" type="ST_Path" use="required"/>
 		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
