@@ -12,9 +12,9 @@
 
 
 
-| **Version** | 1.1.2 |
+| **Version** | 1.2 |
 | --- | --- |
-| **Status** | Published |
+| **Status** | Draft |
 
 ## Disclaimer
 
@@ -23,20 +23,20 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
 ## Table of Contents
 
 - [Preface](#preface)
-  * [1.1 About this Specification](#11-about-this-specification)
+  * [About this Specification](#about-this-specification)
   * [Document Conventions](#document-conventions)
   * [Language Notes](#language-notes)
   * [Software Conformance](#software-conformance)
 - [Part I: 3MF Production Extension](#part-i-3mf-production-extension)
-- [Chapter 1. Overview of Additions](#chapter-1-overview-of-additions)
-- [Chapter 2. Model Relationships](#chapter-2-model-relationships)
-- [Chapter 3. Production Extension Data Details](#chapter-3-production-extension-data-details)
-  * [3.1 The Path Attribute](#31-the-path-attribute)
-  * [3.2 Path Usage](#32-path-usage)
-  * [3.3 OPC Relation Files](#33-opc-relation-files)
-- [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
-  * [4.1 Build](#41-build)
-  * [4.2 Object](#42-object)
+  * [Chapter 1. Overview of Additions](#chapter-1-overview-of-additions)
+  * [Chapter 2. Model Relationships](#chapter-2-model-relationships)
+  * [Chapter 3. Production Extension Data Details](#chapter-3-production-extension-data-details)
+    + [3.1 The Path Attribute](#31-the-path-attribute)
+    + [3.2 Path Usage](#32-path-usage)
+    + [3.3 OPC Relation Files](#33-opc-relation-files)
+  * [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
+    + [4.1 Build](#41-build)
+    + [4.2 Object](#42-object)
 - [Part II. Appendixes](#part-ii-appendixes)
   * [Appendix A. Glossary](#appendix-a-glossary)
   * [Appendix B. 3MF Production Extension Schema](#appendix-b-3mf-production-extension-schema)
@@ -45,7 +45,7 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
 
 # Preface
 
-## 1.1 About this Specification
+## About this Specification
 
 This 3MF Production Extension specification is an extension to the core 3MF specification. This document cannot stand alone and only applies as an addendum to the core 3MF specification. Usage of this and any other 3MF extensions follow an a la carte model, defined in the core 3MF specification.
 
@@ -61,7 +61,7 @@ This extension MUST be used only with Core specification 1.x.
 
 See [the 3MF Core Specification conventions](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#document-conventions).
 
-In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06". See Appendix [D.1 Namespaces](#d1-namespaces).
+In this extension specification, as an example, the prefix "p" maps to the xml-namespace "http://schemas.microsoft.com/3dmanufacturing/production/2015/06", as defined in 1.x, and the prefix "pa" maps to the xml namespace "http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04". See Appendix [D.1 Namespaces](#d1-namespaces).
 
 ## Language Notes
 
@@ -81,12 +81,13 @@ In order to allow for the use of 3MF in high production printing environments, s
 
 - Enable the 3MF \<build> elements to address objects in separate files within the 3MF package
 - Identify each build, each object and each copy of a part with unique identifiers
+- Define alternative model representations targeted to different applications, where some of those models might be protected.
 
 >**Note:** "Unique identifier" MUST be any of the four UUID variants described in IETF RFC 4122, which includes Microsoft GUIDs as well as time-based UUIDs.
 
 A consumer supporting the production extension MUST be able to consume non-extended core 3MFs, even if this is not as efficient. As the production extension is just a reorganization of data, a consumer MAY convert a generic core 3MF into a "production extended 3MF" before internally processing the data.
 
-In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension as "required extension", as defined in the core specification.
+In order to avoid data loss while parsing, a 3MF package which uses referenced objects MUST enlist the production extension(s) as "required extension", as defined in the core specification.
 
 # Chapter 2. Model Relationships
 
@@ -123,6 +124,7 @@ Within the \<item> element of the build section in the root model, there is a ne
 | --- | --- | --- | --- | --- |
 | path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| @anyAttribute | | | | |
 
 ### 3.1.2 Component
 
@@ -136,6 +138,7 @@ Within the \<component> elements of component-based objects, the "path" attribut
 | --- | --- | --- | --- | --- |
 | path | **ST\_Path** | optional | | A file path to the model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | objectid | **ST\_ResourceID** | required | | Objectid is part of the core 3MF specification, and its use in the production extension the same: objectid indexes into the model file to the object with the corresponding id. The only difference is that the path attribute identifies the target file from which to load the specified object. |
+| @anyAttribute | | | | |
 
 ## 3.2 Path Usage
 
@@ -193,6 +196,7 @@ Element **\<build>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | uuid | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
+| @anyAttribute | | | | |
 
 
 Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
@@ -206,6 +210,7 @@ Element **\<item>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each item in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| @anyAttribute | | | | |
 
 Producers MUST include UUID's for all build items for traceability across 3MF packages.
 
@@ -218,6 +223,8 @@ Element **\<object>**
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
 | UUID | **ST\_UUID** | required | | A globally unique identifier for each \<object> in the 3MF package which allows producers and consumers to track object instances across 3MF packages. In the case that an \<object> is made up of \<components>, the UUID represents a unique ID for that collection of object references. |
+| modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use of the object model when there are alternative representiations. |
+| @anyAttribute | | | | |
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
@@ -229,9 +236,53 @@ Element **\<component>**
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
-| UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. |
+| UUID | **ST\_UUID** | required | | A globally unique identifier for each object component in the 3MF package which allows producers and consumers to track part instances across 3MF packages. | @anyAttribute | | | | |
 
 Producers MUST include UUID's in all component-based object references to ensure that each instance of an object can be reliably tracked.
+
+### 4.2.2 Alternatives
+
+Element **\<alternative>**
+
+![component.png](images/alternatives.png)
+
+The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a production printer.
+
+When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
+
+When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
+
+The producer MUST generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MAY decide which one to select, and the producer MAY not infer which one.
+
+### 4.2.2.1 Alternative
+
+Element **\<alternative>**
+
+![component.png](images/alternative.png)
+
+| Name | Type | Use | Default | Annotation |
+| --- | --- | --- | --- | --- |
+| objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
+| UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model. |
+| path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
+| @anyAttribute | | | | |
+
+The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
+
+Only an object in the root model file MAY contain alternative representations. Non-root model file object MUST only reference objects in the same model file.
+
+These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
+
+The *modelresolution* element specify the intent of the model:
+
+* *fullres*: the model is a high resolution and it is intended for printing. It MUST be only one "fullres" model in the object.
+* *lowres*: the model is low resolution, for example for visualization purposes.
+* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes. 
+
+A printer MUST reject models without a "fullres" representation available for printing. For example, if the model file is encrypted the printer MUST be able to decrypt it.
+
+The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
 
 # Part II. Appendixes
 
@@ -239,58 +290,142 @@ Producers MUST include UUID's in all component-based object references to ensure
 
 See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md#appendix-a-glossary).
 
-## Appendix B. 3MF Production Extension Schema
+## Appendix B. 3MF XSD Schema
+
+### B.1. Production Schema
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
-    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd"/>
 
-    <!-- Complex Types -->
+	<!-- Complex Types -->
 
-    <xs:complexType name="CT_Item">
-        <xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="path" type="ST_Path"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-    </xs:complexType>
+	<xs:complexType name="CT_Item">
+		<xs:attribute name="path" type="ST_Path"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 
-     <xs:complexType name="CT_Component">
-        <xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="path" type="ST_Path"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-     </xs:complexType>
+	<xs:complexType name="CT_Component">
+		<xs:attribute name="path" type="ST_Path"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 
     <xs:complexType name="CT_Object">
-        <xs:choice>
-            <xs:element ref="mesh"/>
-            <xs:element ref="components"/>
-        </xs:choice>
         <xs:attribute name="id" type="ST_ResourceID" use="required"/>
         <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:attribute name="type" type="ST_ObjectType" default="model"/>
-        <xs:attribute name="pid" type="ST_ResourceID"/>
-        <xs:attribute name="pindex" type="ST_ResourceIndex"/>
-        <xs:attribute name="thumbnail" type="ST_UriReference"/>
-        <xs:attribute name="partnumber" type="xs:string"/>
-        <xs:attribute name="name" type="xs:string"/>
         <xs:anyAttribute namespace="##other" processContents="lax"/>
     </xs:complexType>
+	
+	<xs:complexType name="CT_Build">
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 
-    <!-- Simple Types -->
+	<!-- Simple Types -->
 
-    <xs:simpleType name="ST_Path">
-        <xs:restriction base="xs:string">
-        </xs:restriction>
-    </xs:simpleType>
+	<xs:simpleType name="ST_ResourceID">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxExclusive value="2147483648"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_Path">
+		<xs:restriction base="xs:string"> </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_UUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Elements -->
+	<xs:element name="item" type="CT_Item"/>
+	<xs:element name="component" type="CT_Component"/>
+	<xs:element name="object" type="CT_Object"/>
+	<xs:element name="build" type="CT_Build"/>
+	
+</xs:schema>
+```
 
-    <xs:simpleType name="ST_UUID">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
-        </xs:restriction>
-    </xs:simpleType>
+### B.2. Production Alternatives Schema
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	targetNamespace="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified" blockDefault="#all">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace"
+		schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+
+	<!-- Complex Types -->
+
+	<xs:complexType name="CT_Object">
+		<xs:sequence>
+			<xs:element ref="alternatives" minOccurs="0" maxOccurs="1"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
+		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+
+	<xs:complexType name="CT_Alternatives">
+		<xs:sequence>
+			<xs:element ref="alternative" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	
+	<xs:complexType name="CT_Alternative">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="2147483647"/>
+		</xs:sequence>
+		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:attribute name="path" type="ST_Path" use="required"/>
+		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	
+	<!-- Simple Types -->
+
+	<xs:simpleType name="ST_ResourceID">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxExclusive value="2147483648"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_Path">
+		<xs:restriction base="xs:string"> </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ST_UUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ST_ModelResolution">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fullres"/>
+			<xs:enumeration value="lowres"/>
+			<xs:enumeration value="obfuscated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Elements -->
+	<xs:element name="object" type="CT_Object"/>
+	<xs:element name="alternatives" type="CT_Alternatives"/>
+	<xs:element name="alternative" type="CT_Alternative"/>
+	
 </xs:schema>
 ```
 
@@ -338,6 +473,55 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 ```
 ![Simple Production Example with UUID](images/box.png)
 
+### C.2. Alternatives Production Sample
+
+Same example as in C2 but with a low resolution default model an alternative representation at full resolution.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" unit="millimeter" xml:lang="en-US" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06"
+xmlns:pa="http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04">
+   	<metadata name="Copyright">Copyright (c) 2021 3MF Consortium. All rights reserved.</metadata>
+	<resources>
+		<object id="1" name="MyModel" type="model" pa:modelresolution="lowres"
+		thumbnail="/Thumbnails/MyModel.png" p:UUID="1c5385ee-9399-47c4-88dd-22b61d3d3598" >
+			<mesh>
+				<vertices>
+					<vertex x="35.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="33.00000" z="16.92000" />
+					<vertex x="45.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="53.00000" z="16.92000" />
+					<vertex x="35.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="33.00000" z="46.92000" />
+					<vertex x="45.00000" y="53.00000" z="46.92000" />
+					<vertex x="35.00000" y="53.00000" z="46.92000" />
+				</vertices>
+				<triangles>
+					<triangle v1="3" v2="2" v3="1" />
+					<triangle v1="1" v2="0" v3="3" />
+					<triangle v1="4" v2="5" v3="6" />
+					<triangle v1="6" v2="7" v3="4" />
+					<triangle v1="0" v2="1" v3="5" />
+					<triangle v1="5" v2="4" v3="0" />
+					<triangle v1="1" v2="2" v3="6" />
+					<triangle v1="6" v2="5" v3="1" />
+					<triangle v1="2" v2="3" v3="7" />
+					<triangle v1="7" v2="6" v3="2" />
+					<triangle v1="3" v2="0" v3="4" />
+					<triangle v1="4" v2="7" v3="3" />
+				</triangles>
+			</mesh>
+	  		<pa:alternatives>
+				<pa:alternative objectid="11" path="MyModel.model" modelresolution="fullres"/>
+	  		</pa:alternatives>
+		</object>
+	</resources>
+	<build p:UUID="98d328dc-6378-4f4b-880f-8c6e0ed980e2">
+		<item objectid="1" p:UUID="9b344c24-5605-4d74-9d44-9e515d9520f7" />
+	</build>
+</model>
+```
+
 See more examples in [3MF Production Specification examples](https://github.com/3MFConsortium/3mf-samples/tree/master/examples/production)
 
 ## Appendix D. Standard Namespaces and Content Types
@@ -345,6 +529,8 @@ See more examples in [3MF Production Specification examples](https://github.com/
 ### D.1 Namespaces
 
 Production http://schemas.microsoft.com/3dmanufacturing/production/2015/06
+
+Alternatives http://schemas.microsoft.com/3dmanufacturing/production/alternatives/2021/04
 
 # References
 
