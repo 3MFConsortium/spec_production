@@ -37,7 +37,7 @@ THESE MATERIALS ARE PROVIDED "AS IS." The contributors expressly disclaim any wa
   * [Chapter 4. Identifying Build Components](#chapter-4-identifying-build-components)
     + [4.1 Build](#41-build)
     + [4.2 Object](#42-object)
-- [Part II. Appendixes](#part-ii-appendixes)
+- [Part II. Appendices](#part-ii-appendices)
   * [Appendix A. Glossary](#appendix-a-glossary)
   * [Appendix B. 3MF Production Extension Schema](#appendix-b-3mf-production-extension-schema)
   * [Appendix C. Standard Namespaces and Content Types](#appendix-c-standard-namespaces-and-content-types)
@@ -51,7 +51,7 @@ This 3MF Production Extension specification is an extension to the core 3MF spec
 
 Part I, "3MF Documents," presents the details of the primarily XML-based 3MF Document format. This section describes the XML markup that defines the composition of 3D documents and the appearance of each model within the document.
 
-Part II, "Appendixes," contains additional technical details and schemas too extensive to include in the main body of the text as well as convenient reference information.
+Part II, "Appendices," contains additional technical details and schemas too extensive to include in the main body of the text as well as convenient reference information.
 
 The information contained in this specification is subject to change. Every effort has been made to ensure its accuracy at the time of publication.
 
@@ -284,7 +284,7 @@ A printer MUST reject models without a "fullres" representation available for pr
 
 The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
 
-# Part II. Appendixes
+# Part II. Appendices
 
 ## Appendix A. Glossary
 
