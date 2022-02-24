@@ -230,7 +230,7 @@ Producers MUST include UUID's in all \<object> references to ensure that each ob
 
 The *modelresolution*, defined in the alternative's namespace, indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated.
 
-The *priority* of this object in the sequence of alternatives is assigned a value of 0, or the lower priority. As a consequence this object might be replaced by other objects defined in the alternatives element.
+The *priority* of this object in the sequence of alternatives, is assigned a value of 0, or the lower priority, that might be replaced by other objects defined in the alternatives element.
 
 ### 4.2.1 Component
 
@@ -270,7 +270,7 @@ Element **\<alternative>**
 | UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model. |
 | path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
-| priority | **ST\_ResourceIndex** |  | 0  | Indicates the priority order in case the consumer has access to more than one object of the same model resolution. |
+| priority | **ST\_Index_** |  | 0  | Indicates the priority order in case the consumer has access to more than one object of the same model resolution. |
 | @anyAttribute | | | | |
 
 The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
@@ -399,7 +399,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
 		<xs:attribute name="path" type="ST_Path" use="required"/>
 		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
-		<xs:attribute name="priority" type="ST_ResourceIndex" default="0"/>
+		<xs:attribute name="priority" type="ST_Index" default="0"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 	
@@ -411,7 +411,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="ST_ResourceIndex">
+	<xs:simpleType name="ST_Index">
 		<xs:restriction base="xs:nonNegativeInteger">
 			<xs:maxExclusive value="2147483648"/>
 		</xs:restriction>
