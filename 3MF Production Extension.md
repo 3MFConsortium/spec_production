@@ -228,6 +228,8 @@ Element **\<object>**
 
 Producers MUST include UUID's in all \<object> references to ensure that each object can be reliably tracked.
 
+The *modelresolution*, defined in the alternative's namespace, indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated.
+
 ### 4.2.1 Component
 
 Element **\<component>**
@@ -250,7 +252,7 @@ The \<alternatives> element group provides a way to specify alternative represen
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
 
-When several alternative representations, include the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
+When several alternative representations are available, including the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
 
 The producer MUST generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MAY decide which one to select, and the producer MAY not infer which one.
 
@@ -274,13 +276,15 @@ Only an object in the root model file MAY contain alternative representations. N
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
-The *modelresolution* element specify the intent of the model:
+The *modelresolution* attribute specifies the intent of the model:
 
-* *fullres*: the model is a high resolution and it is intended for printing. It MUST be only one "fullres" model in the object.
+* *fullres*: the model is a high resolution and it is intended for printing.
+* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
 * *lowres*: the model is low resolution, for example for visualization purposes.
-* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes. 
 
-A printer MUST reject models without a "fullres" representation available for printing. For example, if the model file is encrypted the printer MUST be able to decrypt it.
+It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representation of the same *modelresolution* are available and the consumer has "access rights" to that object, the priority order is defined by the direct order in the \<alternative> element sequence, and in case none of those is available the fallback representation is the one in the base object itself.
+
+A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
 
 The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
 
