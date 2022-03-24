@@ -12,9 +12,9 @@
 
 
 
-| **Version** | 1.1.2 |
+| **Version** | 1.1.3 |
 | --- | --- |
-| **Status** | Published |
+| **Status** | Draft |
 
 ## Disclaimer
 
@@ -195,7 +195,7 @@ Element **\<build>**
 | uuid | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
 
 
-Producers MUST provide a UUID in the root model file build element to ensure that a 3MF package can be tracked across uses by various consumers.
+Producers MUST provide a UUID in the build element of each model file of a 3MF package. The UUID in the build element of the root model file ensures that a 3MF package can be tracked across uses by various consumers.
 
 ### 4.1.1 Item
 
