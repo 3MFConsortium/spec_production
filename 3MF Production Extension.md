@@ -248,7 +248,7 @@ Element **\<alternative>**
 
 ![component.png](images/alternatives.png)
 
-The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a production printer.
+The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a printer.
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
 
@@ -272,7 +272,7 @@ Element **\<alternative>**
 
 The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
 
-Only an object in the root model file MAY contain alternative representations. Non-root model file object MUST only reference objects in the same model file.
+Only an object in the root model file MAY contain alternative representations in a different model file. A non-root model file object MUST only reference objects in the same model file.
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
