@@ -266,7 +266,7 @@ Element **\<alternative>**
 | --- | --- | --- | --- | --- |
 | objectid | **ST\_ResourceID** | required | | objectid indexes into the model file to the object with the corresponding id. |
 | UUID | **ST\_UUID** | required | | A globally unique identifier to allow to identify the alternative model. |
-| path | **ST\_Path** | required | | A file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
+| path | **ST\_Path** | | | An optional file path to the alternative model file being referenced. The path is an absolute path from the root of the 3MF container. |
 | modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
 
@@ -282,7 +282,7 @@ The *modelresolution* attribute specifies the intent of the model:
 * *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
 * *lowres*: the model is low resolution, for example for visualization purposes.
 
-It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representation of the same *modelresolution* are available and the consumer has "access rights" to that object, the priority order is defined by the direct order in the \<alternative> element sequence, and in case none of those is available the fallback representation is the one in the base object itself.
+It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representation of the same *modelresolution* are available and the consumer has "access rights" to that object, the priority order is defined by the direct order in the \<alternative> element sequence, and being the representation in the referencing object the one with last priority.
 
 A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
 
@@ -394,7 +394,7 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		</xs:sequence>
 		<xs:attribute name="objectid" type="ST_ResourceID" use="required"/>
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
-		<xs:attribute name="path" type="ST_Path" use="required"/>
+		<xs:attribute name="path" type="ST_Path"/>
 		<xs:attribute name="modelresolution" type="ST_ModelResolution" default="fullres"/>
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
