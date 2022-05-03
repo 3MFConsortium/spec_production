@@ -195,7 +195,7 @@ Element **\<build>**
 
 | Name | Type | Use | Default | Annotation |
 | --- | --- | --- | --- | --- |
-| uuid | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
+| UUID | **ST\_UUID** | required | | A universally unique ID that allows the build to be identified over time and across physical clients and printers. |
 | @anyAttribute | | | | |
 
 
