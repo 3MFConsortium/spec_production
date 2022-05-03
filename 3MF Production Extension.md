@@ -254,7 +254,7 @@ When this is used in conjunction with [the 3MF Secure Content Extension](https:/
 
 When several alternative representations are available, including the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
 
-The producer MUST generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MAY decide which one to select, and the producer MAY not infer which one.
+The producer SHOULD generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MUST decide which one to select based on the priority order defined by the direct order in the \<alternative> element sequence.
 
 ### 4.2.2.1 Alternative
 
@@ -282,11 +282,11 @@ The *modelresolution* attribute specifies the intent of the model:
 * *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
 * *lowres*: the model is low resolution, for example for visualization purposes.
 
-It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representation of the same *modelresolution* are available and the consumer has "access rights" to that object, the priority order is defined by the direct order in the \<alternative> element sequence, and being the representation in the referencing object the one with last priority.
+It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representations of the same *modelresolution* are available and the consumer has "access rights" to those objects, the priority order is defined by the direct order in the \<alternative> element sequence, and being the representation in the referencing object the one with last priority.
 
 A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
 
-The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model by the path.
+The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model.
 
 # Part II. Appendices
 
