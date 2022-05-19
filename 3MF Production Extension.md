@@ -321,11 +321,11 @@ See [the 3MF Core Specification glossary](https://github.com/3MFConsortium/spec_
 		<xs:anyAttribute namespace="##other" processContents="lax"/>
 	</xs:complexType>
 
-    <xs:complexType name="CT_Object">
-        <xs:attribute name="id" type="ST_ResourceID" use="required"/>
-        <xs:attribute name="UUID" type="ST_UUID" use="required"/>
-        <xs:anyAttribute namespace="##other" processContents="lax"/>
-    </xs:complexType>
+	<xs:complexType name="CT_Object">
+		<xs:attribute name="id" type="ST_ResourceID" use="required"/>
+		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
 	
 	<xs:complexType name="CT_Build">
 		<xs:attribute name="UUID" type="ST_UUID" use="required"/>
