@@ -250,7 +250,7 @@ Element **\<alternative>**
 
 The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a printer.
 
-When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alterative representation were they have access.
+When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alternative representation to which they have access.
 
 When several alternative representations are available, including the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
 
@@ -288,7 +288,7 @@ A production printer MUST reject models with only a "lowres" representation avai
 
 An object referred as an alternative MUST NOT in turn refer to any other object that has any alternative representation.
 
-The *modelresolution* specified in the \<alternative> element overrides the optionally specified in the referenced model.
+The *modelresolution* specified in the \<alternative> element overrides any modelresolution attribute that may be specified in the referenced object.
 
 # Part II. Appendices
 
