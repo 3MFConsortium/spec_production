@@ -286,7 +286,7 @@ It defines as well the priority order to select the alternative representation: 
 
 A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
 
-An object referred as an an alternative MUST NOT in turn refer to any other object that has alternative representation.
+An object referred as an alternative MUST NOT in turn refer to any other object that has any alternative representation.
 
 The *modelresolution* specified in the \<alternative> element overrides any modelresolution attribute that may be specified in the referenced object.
 
