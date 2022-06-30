@@ -248,11 +248,11 @@ Element **\<alternative>**
 
 ![component.png](images/alternatives.png)
 
-The \<alternatives> element group provides a way to specify alternative representations of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a printer.
+The \<alternatives> element group provides a way to specify alternative representation of a given model. For example, a 3MF with a low resolution object MAY be accepted by an application for previewing purposes but it MAY be rejected by a printer.
 
 When this is used in conjunction with [the 3MF Secure Content Extension](https://github.com/3MFConsortium/spec_securecontent/blob/master/3MF%20Secure%20Content.md), some of those models might be protected with encryption and consumers might use an alternative representation to which they have access.
 
-When several alternative representations are available, including the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
+When several alternative representations are available, including the one in the root model, the consumer MAY decide which representation to choose from the ones that has rights and supports all required extensions. A consumer MAY select a fullres resolution over a lowres or obfuscated. And a printer might reject to print a lowres model.
 
 The producer SHOULD generate a 3MF file with no ambiguity for the consumer. When there is ambiguity, for example two fullres models available for a consumer, the consumer MUST decide which one to select based on the priority order defined by the direct order in the \<alternative> element sequence.
 
@@ -270,21 +270,23 @@ Element **\<alternative>**
 | modelresolution | **ST\_ModelResolution** |  | fullres  | Indicates the intended use the alternative object model. Valid options are: fullres, lowres, obfuscated. |
 | @anyAttribute | | | | |
 
-The \<alternative> element specifies an alternative representations of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
+The \<alternative> element specifies an alternative representation of a given model. The alternative MAY replace the object content representation, either the content under mesh or components.
 
-Only an object in the root model file MAY contain alternative representations in a different model file. A non-root model file object MUST only reference objects in the same model file.
+Only an object in the root model file MAY contains alternative representations in a different model file. A non-root model file object MUST only reference objects in the same model file.
 
 These two limitations ensure there is only a single level of "depth" to multi-file model relationships within a package and explicitly prevents complex or circular object references.
 
 The *modelresolution* attribute specifies the intent of the model:
 
-* *fullres*: the model is a high resolution and it is intended for printing.
-* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some condidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
+* *fullres*: the model is a high resolution, and it is intended for printing.
+* *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some confidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
 * *lowres*: the model is low resolution, for example for visualization purposes.
 
-It defines as well the priority order to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representations of the same *modelresolution* are available and the consumer has "access rights" to those objects, the priority order is defined by the direct order in the \<alternative> element sequence, and being the representation in the referencing object the one with last priority.
+It defines the priority order as well to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representations of the same *modelresolution* are available and the consumer has "access rights" and supports all required extensions of those objects, the priority order is defined by the direct order in the \<alternative> element sequence and being the representation in the referencing object the one with last priority.
 
-A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
+The priority order is a hint for the consumer. For example, a visualization consumer MIGHT chose to visualize a "lowres" alternative for performance reasons. 
+
+A production printer MUST reject models with only a "lowres" representation available for printing. For example, if the "fullres" model file is encrypted the production printer MUST be able to decrypt it. Printing an "obfuscated" MIGHT or MIGHT NOT be accepted, depending on the printing intent. For example, it MIGHT be accepted for viewing purposes or prototyping, but it MUST be rejected for final production.
 
 An object referred as an alternative MUST NOT in turn refer to any other object that has any alternative representation.
 
