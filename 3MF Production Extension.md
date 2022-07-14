@@ -282,7 +282,9 @@ The *modelresolution* attribute specifies the intent of the model:
 * *obfuscated*: the intent of the obfuscated model is to provide a modified version of the fullres model by hiding some confidentially sensitive zones. An "obfuscated" model MUST fully enclose the shape of the "fullres" version, for example, for packing purposes.
 * *lowres*: the model is low resolution, for example for visualization purposes.
 
-It defines the priority order as well to select the alternative representation: 1. *fullres* -> 2. *obfuscated* -> 3. *lowres*. When two or more alternative representations of the same *modelresolution* are available and the consumer has "access rights" and supports all required extensions of those objects, the priority order is defined by the direct order in the \<alternative> element sequence. The representation in the enclosing object has the lowest priority.
+The priority order is defined by the direct order in the \<alternative> element sequence. The representation in the enclosing object has the lowest priority.
+
+When the consumer either do not have "access right" to the object, do not support all the all required extensions of an object, or the "modelresolution" is not suitable for the application, it would skip that alternative and select in turn next alternative.
 
 The priority order is a hint for the consumer. For example, a visualization consumer MIGHT chose to visualize a "lowres" alternative for performance reasons. 
 
