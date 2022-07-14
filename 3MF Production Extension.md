@@ -284,7 +284,7 @@ The *modelresolution* attribute specifies the intent of the model:
 
 The priority order is defined by the direct order in the \<alternative> element sequence. The representation in the enclosing object has the lowest priority.
 
-When the consumer either do not have "access right" to the object, do not support all the all required extensions of an object, or the "modelresolution" is not suitable for the application, it would skip that alternative and select in turn next alternative.
+When the consumer either does not have "access right" to the object, does not support all the all required extensions of an object, or the "modelresolution" is not suitable for the application, it MIGHT skip that alternative and select, in turn, the next alternative.
 
 The priority order is a hint for the consumer. For example, a visualization consumer MIGHT chose to visualize a "lowres" alternative for performance reasons. 
 
