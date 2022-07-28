@@ -14,7 +14,7 @@
 
 | **Version** | 1.2 |
 | --- | --- |
-| **Status** | Draft |
+| **Status** | Approved |
 
 ## Disclaimer
 
